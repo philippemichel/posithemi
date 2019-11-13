@@ -1,0 +1,52 @@
+---
+title: "POST-HEMI"
+author: "Philippe MICHEL"
+output:
+  pdf_document:
+    #includes:
+    #  in_header: tete.tex
+    keep_tex: yes
+    latex_engine: lualatex
+    toc: yes
+  html_notebook:
+    fig_caption: yes
+    theme: spacelab
+  html_document:
+    df_print: paged
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+# Protocole
+
+**Évaluation de protocoles de positionnement avec du matériel adapté au fauteuil roulant (FR) chez des patients hémiplégiques suite à un accident vasculaire cérébral**
+
+```{r setup, include= FALSE}
+# knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
+```
+
+
+```{r info}
+library("thesisph")
+library("tidyverse")
+library("missMDA")
+library("epiDisplay")
+library("factoextra")
+library("lubridate")
+library("knitr")
+library("finalfit")
+library("ClinReport")
+library("lme4")
+library("lmerTest")
+sessionInfo()
+```
+
+# Importation & mise en forme des variables
+
+On ne garde que les patients n'ayant pas d'escarre à l'admission.
+
+```{r debut}
+tt <- read.csv("data/base.csv", sep = ",", header = TRUE)
+```
