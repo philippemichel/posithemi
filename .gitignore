@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+/.quarto/
+entete_pdf
+posihemi_stat.html
+*.pdf
+*.htlm
+datas/
+*cache*

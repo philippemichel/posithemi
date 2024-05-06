@@ -1,11 +1,20 @@
-# posithemi
-Étude POSIT-HEMI
+![USRC](novo_usrc.png)
 
-POSIT-HEMI
-« Evaluation de protocoles de positionnement avec du matériel adapté au fauteuil roulant (FR) chez des patients hémiplégiques suite à un accident vasculaire cérébral
+<!-- badges: start -->
 
-Code Projet : GHIV0417– N° ID-RCB : 2019-A01759-48
-Dr Nadine PELLEGRINI
+![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
-Code R
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
+<!-- badges: end -->
+
+
+# Étude POSIT-HEMI
+
 Analyse en cross-over
+
+06/05/2004 : 
+
+  - Mise en place du rapport stat `posit_hemi.Rmd`
+  - Routine d'imortation des données, première version `importph.R`
+    

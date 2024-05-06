@@ -1,0 +1,135 @@
+---
+subtitle: "Analyse statistique - V 1.0"
+lang: fr
+author:
+  - name: "D\\up{r} Philippe \\textsc{Michel}"
+    affiliations:
+      name: "USRC -- Hôpital NOVO"
+      orcid: "0000-0003-2392-7186"
+      email: "philippe.michel@ght-novo.fr"
+      role: "Statisticien"
+      department: "Unité de Soutien à la Recherche Clinique"
+title-block-banner: true
+format:
+  html:
+    theme: minty
+    embed-resources: true
+    code-fold: true
+    html-math-method: katex
+    highlight-style: ayu
+    page-layout: full
+    toc: true
+    number-sections: true
+    smooth-scroll: true
+    citation-hover: true
+bibliography: stat.bib
+csl: jama.csl
+license: "MIT"
+warning: false
+message: false
+cache: true
+---
+
+::: {.panel-tabset}
+
+# Introduction
+
+- **Investigateur coordonnateur** : Dr Nadine PELLEGRINI -- SSR Hôpital NOVO} (Site Aincourt)
+- **Chef de projet** : Mme Véronique DA COSTA\\newline
+
+**Évaluation de protocoles de positionnement avec du matériel adapté au fauteuil roulant (FR) chez des patients hémiplégiques suite à un accident vasculaire cérébral.**
+
+::: {.callout-tip}
+## Objectif principal
+
+Évaluer le degré de rétroversion du bassin à court terme des patients hémiplégiques
+suite à un AVC, utilisateurs de fauteuil roulant, selon deux protocoles de
+positionnement au FR comparativement à la pratique habituelle soit l’absence de
+matériel de positionnement.
+:::
+
+
+```{r}
+#| label: info
+
+ rm(list=ls())
+library(baseph)
+library(tidyverse)
+library(kableExtra)
+library(scales)
+library(forestmodel)
+library(gtsummary)
+library(epiDisplay)
+library(labelled)
+library(ggstats)
+library(DataExplorer)
+library(xlsx)
+library(lubridate)
+
+expx <- FALSE
+classeur <- "posithemi.xlsx"
+if (expx){system(paste0("rm -f ",classeur))}
+#
+theme_gtsummary_language(language = "fr", decimal.mark = ",")
+options(OutDec = ",")
+#
+load(file = "datas/posithemi.RData")
+# sessionInfo()
+```
+
+L'échantillon comporte `r nrow(tt)` cas pour `r ncol(tt)-2` variables.
+
+## Population
+
+Les itmes ne comportent que des réponses `Oui` & des cas vides qui peuvent être interprétées comme `Non` ou comme réponse absente. En l'absence d'un nombre précis de réponse il est impossible de calculer le moindre pourcentage. 
+
+```{r}
+#| label: tbl-clinique1
+#| tbl-cap: Description démographique
+#| eval: false
+
+tt |>
+  dplyr::select(c(2:17)) |>
+  tbl_summary( missing = "no", 
+  statistic = list(
+      all_categorical() ~ "{n} ")) |> 
+bold_labels() |>
+  gexptabph(exp = expx, nomfich = classeur, nomsheet = "demo")
+```
+
+
+# Technique {.appendix}
+
+
+Le risque $\alpha$ retenu a été de 0,05 & la puissance de 0,8.
+
+Toutes les variables sont discrètes & sont présentées en nombre avec le pourcentage. L'intervalle de confiance (à 95 %) a été calculé par bootstrap (package `boot` [@boot]). Le test du $\chi^2$ de \textsc{Spearman} pourra être utilisé sous réserve d'un effectif suffisant, à défaut le test exact de \textsc{Fischer} pour comparer des items d'un même questionnaire entre eux. Les comparaisons entre les deux groupes seront réalisées après transformation en nombre des résultats des questionnaires (validé pour le \textsc{heiq} en prenant la moyenne par thème). Les comparaisons seront alors réalisées par un test t de Student après vérification des conditions d'application. À défaut un test non paramétrique de Wilcoxon a été utilisé.
+
+Des graphiques seront réalisés pour les résultats importants (package `ggplot2` [@ggplot]).
+
+## Taille de l'échantillon
+
+
+## Données manquantes & contrôle qualité
+
+Un décompte des données manquantes a été réalisé. Les variables comportant trop de données manquantes ou non utilisables ne seront pas prises en compte après validation par le promoteur en particulier les scores \textsc{heiq} incomplets.
+
+## Description de la population
+
+Les données démographiques seront présentés. Des comparaisons entre les deux groupes seront réalisées pour rechercher une éventuelle différence.
+
+
+
+## Objectif principal
+
+
+
+
+## Objectifs secondaires
+
+
+Une analyse de la durée de séjour a été réalisée sur le même principe. On analyse aussi le lieu de séjour (SSR  vs service de court séjour en première intention) & la durée totale d'hospitalisation sur un an. Une comparaison a été réalisée par un test de \textsc{Wilcoxon}.
+
+L'analyse statistique a été réalisée avec le logiciel **R** [@rstat] & divers packages en particulier `tidyverse` [@tidy] & `baseph` [@baseph].
+
+:::
